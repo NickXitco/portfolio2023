@@ -1,0 +1,70 @@
+.container {
+}
+
+.floater {
+    position: fixed;
+    top: 0;
+
+    z-index: -1;
+
+    width: 100vw;
+    height: 100vh;
+
+}
+
+.nav {
+    text-align: right;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+
+        font-family: Mori;
+        text-transform: lowercase;
+        letter-spacing: 0.1em;
+    }
+}
+
+
+.nav_link {
+    color: white;
+    opacity: 0.5;
+    text-decoration: none;
+
+    transition: opacity 0.5s ease-in-out;
+
+
+    &:hover {
+        opacity: 0.9;
+
+    }
+}
+
+.canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+
+    inset: 0;
+
+    transition: filter 1s ease-in-out;
+}
+
+.grain_texture {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    object-fit: cover;
+    opacity: 1;
+
+}

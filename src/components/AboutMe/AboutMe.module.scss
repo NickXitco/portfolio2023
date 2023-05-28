@@ -1,0 +1,53 @@
+.container {
+
+}
+
+.about_me {
+    display: grid;
+    grid-template-columns: 50rem 1fr;
+    gap: 4rem;
+
+    height: 70vh;
+}
+
+
+.headshot_wrapper {
+    overflow: hidden;
+    border-radius: 25rem 25rem 5rem 0;
+
+
+    box-shadow: rgba(0, 0, 0, 0.75) 0 0 0 4px, rgba(255, 255, 255, 0.25) 1rem 1rem 0 4px;
+
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+
+.about_me_text {
+    h2 {
+        font-size: 10rem;
+        margin: 0 0 1rem;
+    }
+
+    p {
+        font-family: Mori, sans-serif;
+        font-size: 2rem;
+        max-width: 40ch;
+        line-height: 1.2;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+        opacity: 0.75;
+
+        &:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    }
+}
