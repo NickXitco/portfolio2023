@@ -1,289 +1,209 @@
 import * as THREE from 'three'
-import { createRef, FC, useEffect, useRef, useState } from 'react'
+import { Camera, DataTexture, PerspectiveCamera } from 'three'
+import { FC, useEffect, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
-import { createOctree, getAllBoids, OctreeNode, searchRadius } from './Octree'
-import { fisherYates } from '../../utils/fisherYates'
+import { GPUComputationRenderer, Variable } from 'three/examples/jsm/misc/GPUComputationRenderer'
+import {
+	BoidUniforms,
+	BOUNDS,
+	BOUNDS_HALF,
+	positionShader,
+	positionShaderUniforms,
+	velocityShader,
+	velocityShaderUniforms,
+	WIDTH,
+} from './ShaderBoids'
+import { SWIMMING_POOL_Z } from '../MainFrame'
 
-export type Boid = {
-	position: THREE.Vector3
-	velocity: THREE.Vector3
-	acceleration: THREE.Vector3
-	r: number
-	maxSpeed: number
-	maxForce: number
+let gpuCompute: GPUComputationRenderer
+let velocityVariable: Variable
+let positionVariable: Variable
+
+let positionUniforms: positionShaderUniforms = {
+	time: { value: 1.0 },
+	delta: { value: 0.0 },
 }
 
-const createBoid = (): Boid => ({
-	position: new THREE.Vector3(Math.random() * 1000 - 500, Math.random() * 1000 - 500, -Math.random() * 400 - 100),
-	velocity: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5),
-	acceleration: new THREE.Vector3(0, 0, 0),
-	r: 2.0,
-	maxSpeed: 2.0,
-	maxForce: 0.05,
-})
-
-export type Flock = Boid[]
-
-const createFlock = (count: number): Flock => {
-	let flock: Flock = []
-	for (let i = 0; i < count; i++) {
-		flock.push(createBoid())
-	}
-	return flock
+let velocityUniforms: velocityShaderUniforms = {
+	time: { value: 1.0 },
+	delta: { value: 0.0 },
+	testing: { value: 1.0 },
+	separationDistance: { value: 20.0 },
+	alignmentDistance: { value: 20.0 },
+	cohesionDistance: { value: 20.0 },
+	freedomFactor: { value: 0.75 },
+	predator: { value: new THREE.Vector3() },
 }
 
-interface BoidsProps {
-	count: number
+export const boidUniforms: BoidUniforms = {
+	texturePosition: { value: new DataTexture() },
+	textureVelocity: { value: new DataTexture() },
+	time: { value: 1.0 },
+	delta: { value: 0.0 },
 }
 
-export const Boids: FC<BoidsProps> = (props) => {
-	const { camera } = useThree()
+export const BoidsRunner: FC = () => {
+	const { scene, camera, gl, size } = useThree()
 
-	const flockRef = useRef(createFlock(props.count))
-	const meshRefs = useRef(flockRef.current.map(() => createRef<THREE.Mesh>()))
-
-	const mouse = useRef<THREE.Vector3>(new THREE.Vector3(0, 0, 0))
+	const mouseX = useRef(0)
+	const mouseY = useRef(0)
 
 	useEffect(() => {
-		const handleMouseMove = (event: MouseEvent) => {
+		gpuCompute = new GPUComputationRenderer(WIDTH, WIDTH, gl)
+		if (!gl.capabilities.isWebGL2) {
+			gpuCompute.setDataType(THREE.HalfFloatType)
+		}
+
+		const dtPosition = gpuCompute.createTexture()
+		const dtVelocity = gpuCompute.createTexture()
+		setBoidPositions(dtPosition)
+		setBoidVelocities(dtVelocity)
+
+		velocityVariable = gpuCompute.addVariable('textureVelocity', velocityShader, dtVelocity)
+		positionVariable = gpuCompute.addVariable('texturePosition', positionShader, dtPosition)
+
+		gpuCompute.setVariableDependencies(velocityVariable, [positionVariable, velocityVariable])
+		gpuCompute.setVariableDependencies(positionVariable, [positionVariable, velocityVariable])
+
+		positionUniforms = positionVariable.material.uniforms as positionShaderUniforms
+		velocityUniforms = velocityVariable.material.uniforms as velocityShaderUniforms
+
+		positionUniforms['time'] = { value: 0.0 }
+		positionUniforms['delta'] = { value: 0.0 }
+
+		velocityUniforms['time'] = { value: 1.0 }
+		velocityUniforms['delta'] = { value: 0.0 }
+		velocityUniforms['testing'] = { value: 1.0 }
+
+		velocityUniforms['separationDistance'] = { value: 20.0 }
+		velocityUniforms['alignmentDistance'] = { value: 20.0 }
+		velocityUniforms['cohesionDistance'] = { value: 20.0 }
+		velocityUniforms['freedomFactor'] = { value: 0.75 }
+		velocityUniforms['predator'] = { value: new THREE.Vector3() }
+
+		velocityVariable.material.defines.BOUNDS = BOUNDS.toFixed(2)
+
+		velocityVariable.wrapS = THREE.RepeatWrapping
+		velocityVariable.wrapT = THREE.RepeatWrapping
+		positionVariable.wrapS = THREE.RepeatWrapping
+		positionVariable.wrapT = THREE.RepeatWrapping
+
+		const error = gpuCompute.init()
+
+		if (error !== null) {
+			console.error(error)
+		}
+	}, [gl])
+
+	useEffect(() => {
+		const handleResize = () => {
+			;(camera as PerspectiveCamera).aspect = window.innerWidth / window.innerHeight
+			camera.updateProjectionMatrix()
+			gl.setSize(size.width, size.height)
+		}
+
+		const handlePointerMove = (event: PointerEvent) => {
 			event.preventDefault()
-
-			const tempMouse = new THREE.Vector2()
-			tempMouse.x = (event.clientX / window.innerWidth) * 2 - 1
-			tempMouse.y = -(event.clientY / window.innerHeight) * 2 + 1
-
-			const raycaster = new THREE.Raycaster()
-			raycaster.setFromCamera(tempMouse, camera)
-
-			const planeGeometry = new THREE.PlaneGeometry(10000, 10000)
-			const planeMesh = new THREE.Mesh(planeGeometry)
-			planeMesh.position.set(0, 0, -700)
-
-			const intersects = raycaster.intersectObject(planeMesh, true)
-
-			if (intersects.length > 0) {
-				mouse.current.copy(intersects[0].point)
-			}
+			mouseX.current = event.clientX
+			mouseY.current = event.clientY
 		}
 
-		window.addEventListener('mousemove', handleMouseMove, false)
+		window.addEventListener('resize', handleResize)
+		window.addEventListener('pointermove', handlePointerMove)
+
 		return () => {
-			window.removeEventListener('mousemove', handleMouseMove)
+			window.removeEventListener('resize', handleResize)
+			window.removeEventListener('pointermove', handlePointerMove)
 		}
-	}, [camera])
+	}, [camera, gl, size.height, size.width])
 
-	useFrame(() => {
-		const octree = createOctree(flockRef.current)
-		flockRef.current = flockRef.current.map((boid, i) => {
-			boid = applyFlockRules(boid, octree, mouse.current, camera.position)
-			boid = updateBoid(boid)
+	useFrame((state, delta) => {
+		positionUniforms['time'].value = state.clock.elapsedTime
+		positionUniforms['delta'].value = delta
+		velocityUniforms['time'].value = state.clock.elapsedTime
+		velocityUniforms['delta'].value = delta
+		boidUniforms['time'].value = state.clock.elapsedTime
+		boidUniforms['delta'].value = delta
 
-			meshRefs.current[i].current!.position.copy(boid.position)
-			meshRefs.current[i].current!.lookAt(meshRefs.current[i].current!.position.clone().add(boid.velocity))
+		const windowHalfX = window.innerWidth / 2
+		const windowHalfY = window.innerHeight / 2
 
-			return boid
-		})
+		velocityUniforms['predator'].value.set(
+			(0.5 * (mouseX.current - windowHalfX)) / windowHalfX,
+			(-0.5 * (mouseY.current - windowHalfY)) / windowHalfY,
+			0
+		)
+
+		gpuCompute.compute()
+
+		boidUniforms['texturePosition'].value = gpuCompute.getCurrentRenderTarget(positionVariable)
+			.texture as DataTexture
+
+		console.log(gpuCompute.getCurrentRenderTarget(positionVariable).texture)
+		boidUniforms['textureVelocity'].value = gpuCompute.getCurrentRenderTarget(velocityVariable)
+			.texture as DataTexture
+
+		gl.render(scene, camera)
 	})
 
-	return (
-		<>
-			{flockRef.current.map((_, i) => (
-				<mesh key={i} ref={meshRefs.current[i]}>
-					<coneBufferGeometry attach="geometry" args={[1, 2, 8]} />
-					<meshBasicMaterial
-						attach="material"
-						color={'#5f5af5'}
-						opacity={0.5}
-						transparent={true}
-						wireframe={true}
-					/>
-				</mesh>
-			))}
-		</>
-	)
+	return null
 }
 
-// Separation
-// Method checks for nearby boids and steers away
-const separate = (boid: Boid, flock: Flock) => {
-	const desiredSeparation = 25.0
-	const steer = new THREE.Vector3(0, 0, 0)
-	let count = 0
+const PODS = 5
+const POD_JITTER = 100
+export const setBoidPositions = (texture: DataTexture) => {
+	const data = texture.image.data
 
-	// For every boid in the system, check if it's too close
-	for (let i = 0; i < flock.length; i++) {
-		let d = boid.position.distanceTo(flock[i].position)
-
-		// If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
-		if (d > 0 && d < desiredSeparation) {
-			// Calculate vector pointing away from neighbor
-			let diff = boid.position.clone().sub(flock[i].position)
-			diff.normalize()
-			diff.divideScalar(d) // Weight by distance
-			steer.add(diff)
-			count++ // Keep track of how many
-		}
+	const podLocations = []
+	for (let i = 0; i < PODS; i++) {
+		podLocations.push({
+			x: Math.random() * BOUNDS - BOUNDS_HALF,
+			y: Math.random() * BOUNDS - BOUNDS_HALF,
+			z: Math.random() * BOUNDS - BOUNDS_HALF,
+		})
 	}
 
-	// Average -- divide by how many
-	if (count > 0) {
-		steer.divideScalar(count)
-	}
+	for (let k = 0, kl = data.length; k < kl; k += 4) {
+		const pod = Math.floor(Math.random() * PODS)
 
-	// As long as the vector is greater than 0
-	if (steer.length() > 0) {
-		// Implement Reynolds: Steering = Desired - Velocity
-		steer.normalize()
-		steer.multiplyScalar(boid.maxSpeed)
-		steer.sub(boid.velocity)
-		steer.clampLength(0, boid.maxForce)
-	}
+		// set location + jitter
+		const x = podLocations[pod].x + Math.random() * POD_JITTER - POD_JITTER / 2
+		const y = podLocations[pod].y + Math.random() * POD_JITTER - POD_JITTER / 2
+		const z = podLocations[pod].z + Math.random() * POD_JITTER - POD_JITTER / 2
 
-	return steer
-}
-
-// Alignment
-// For every nearby boid in the system, calculate the average velocity
-const align = (boid: Boid, flock: Flock) => {
-	const neighbordist = 50
-	const sum = new THREE.Vector3(0, 0, 0)
-	let count = 0
-	for (let i = 0; i < flock.length; i++) {
-		let d = boid.position.distanceTo(flock[i].position)
-		if (d > 0 && d < neighbordist) {
-			sum.add(flock[i].velocity)
-			count++
-		}
-	}
-	if (count > 0) {
-		sum.divideScalar(count)
-		sum.normalize()
-		sum.multiplyScalar(boid.maxSpeed)
-		let steer = sum.sub(boid.velocity)
-		steer.clampLength(0, boid.maxForce)
-		return steer
-	} else {
-		return new THREE.Vector3(0, 0, 0)
+		data[k + 0] = x
+		data[k + 1] = y
+		data[k + 2] = z
+		data[k + 3] = 1
 	}
 }
 
-// For the average position of all nearby boids, calculate steering vector towards that position
-const cohesion = (boid: Boid, flock: Flock) => {
-	const neighbordist = 50
-	const sum = new THREE.Vector3(0, 0, 0)
-	let count = 0
-	for (let i = 0; i < flock.length; i++) {
-		let d = boid.position.distanceTo(flock[i].position)
-		if (d > 0 && d < neighbordist) {
-			sum.add(flock[i].position)
-			count++
-		}
-	}
-	if (count > 0) {
-		sum.divideScalar(count)
-		return seek(boid, sum)
-	} else {
-		return new THREE.Vector3(0, 0, 0)
-	}
-}
+export const setBoidVelocities = (texture: DataTexture) => {
+	const data = texture.image.data
 
-const seek = (boid: Boid, target: THREE.Vector3) => {
-	const desired = target.clone().sub(boid.position) // A vector pointing from the position to the target
-	desired.normalize()
-	desired.multiplyScalar(boid.maxSpeed)
-	const steer = desired.sub(boid.velocity)
-	steer.clampLength(0, boid.maxForce)
-	return steer
-}
-
-const avoidObstacle = (boid: Boid, linePoint1: THREE.Vector3, linePoint2: THREE.Vector3) => {
-	const steer = new THREE.Vector3(0, 0, 0)
-
-	const lineDirection = linePoint2.clone().sub(linePoint1).normalize()
-	const vecFromLinePoint1ToBoid = boid.position.clone().sub(linePoint1)
-
-	const projectionLength = vecFromLinePoint1ToBoid.dot(lineDirection)
-	const projectionPoint = linePoint1.clone().add(lineDirection.multiplyScalar(projectionLength))
-
-	const distanceToLine = boid.position.distanceTo(projectionPoint)
-
-	const desiredSeparation = 50.0
-
-	if (distanceToLine < desiredSeparation) {
-		const diff = boid.position.clone().sub(projectionPoint)
-		diff.normalize()
-		diff.divideScalar(distanceToLine)
-		steer.add(diff)
+	const podVelocities = []
+	for (let i = 0; i < PODS; i++) {
+		podVelocities.push({
+			x: Math.random() - 0.5,
+			y: Math.random() - 0.5,
+			z: Math.random() - 0.5,
+		})
 	}
 
-	if (steer.length() > 0) {
-		steer.normalize()
-		steer.multiplyScalar(boid.maxSpeed)
-		steer.sub(boid.velocity)
-		steer.clampLength(0, boid.maxForce)
+	for (let k = 0, kl = data.length; k < kl; k += 4) {
+		const pod = Math.floor(Math.random() * PODS)
+
+		// set velocity + randomness
+		const x = podVelocities[pod].x * 10 + Math.random() * 0.5 - 0.25
+		const y = podVelocities[pod].y * 10 + Math.random() * 0.5 - 0.25
+		const z = podVelocities[pod].z * 10 + Math.random() * 0.5 - 0.25
+
+		data[k + 0] = x
+		data[k + 1] = y
+		data[k + 2] = z
+		data[k + 3] = 1
 	}
-
-	return steer
-}
-const applyForce = (boid: Boid, force: THREE.Vector3) => {
-	const boidCopy = { ...boid }
-	boidCopy.acceleration.add(force)
-	return boidCopy
 }
 
-const updateBoid = (boid: Boid) => {
-	// Update velocity
-	boid.velocity.add(boid.acceleration)
-
-	// Limit speed
-	boid.velocity.clampLength(0, boid.maxSpeed)
-
-	boid.position.add(boid.velocity)
-
-	// Reset acceleration to 0 each cycle
-	boid.acceleration.multiplyScalar(0)
-	return boid
-}
-
-const applyBoundaryForce = (
-	boid: Boid,
-	minX: number,
-	maxX: number,
-	minY: number,
-	maxY: number,
-	minZ: number,
-	maxZ: number
-) => {
-	const force = new THREE.Vector3(0, 0, 0)
-	const padding = 100 // How close boids can get to the edge before being pushed back
-	const pushForce = 0.1 // How hard boids are pushed back
-
-	if (boid.position.x < minX + padding) force.x = pushForce
-	else if (boid.position.x > maxX - padding) force.x = -pushForce
-
-	if (boid.position.y < minY + padding) force.y = pushForce
-	else if (boid.position.y > maxY - padding) force.y = -pushForce
-
-	if (boid.position.z < minZ + padding) force.z = pushForce
-	else if (boid.position.z > maxZ - padding) force.z = -pushForce
-
-	return applyForce(boid, force)
-}
-
-const MAX_NEIGHBORS = 20
-const applyFlockRules = (boid: Boid, octree: OctreeNode, linePoint1: THREE.Vector3, linePoint2: THREE.Vector3) => {
-	const radius = 50
-	const neighbors: Flock = searchRadius(octree, boid.position, radius)
-
-	// shuffle and slice neighbors to be at most MAX_NEIGHBORS
-	const shuffled = fisherYates(neighbors)
-	const flock = shuffled.slice(0, MAX_NEIGHBORS)
-
-	// boid = applyForce(boid, separate(boid, flock).multiplyScalar(1.2))
-	// boid = applyForce(boid, align(boid, flock).multiplyScalar(1.3))
-	// boid = applyForce(boid, cohesion(boid, flock).multiplyScalar(1.0))
-	boid = applyForce(boid, avoidObstacle(boid, linePoint1, linePoint2))
-	boid = applyBoundaryForce(boid, -400, 400, -400, 400, -600, 0)
-
-	return boid
-}
+const vec = new THREE.Vector3()
+const pos = new THREE.Vector3()
