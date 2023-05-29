@@ -9,7 +9,10 @@ export const AboutMe: FC<AboutMeProps> = (props) => {
 		<div id={'about'} className={'section_wrapper'}>
 			<div className={styles.about_me}>
 				<div className={styles.headshot_wrapper}>
-					<img src={headshot} alt={'Me! Nick!'} />
+					<img
+						src={'https://storage.googleapis.com/nick-xitco-portfolio-assets/headshot.jpg'}
+						alt={'Me! Nick!'}
+					/>
 				</div>
 
 				<div className={styles.about_me_text}>

@@ -1,0 +1,85 @@
+@import './constants';
+
+@mixin xs-only {
+    @media (max-width: ($break_sm - 1) + 'px') {
+        @content;
+    }
+}
+
+@mixin sm-only {
+    @media (min-width: $break_sm + 'px') and (max-width: ($break_md - 1) + 'px') {
+        @content;
+    }
+}
+
+@mixin sm-up {
+    @media (min-width: $break_sm + 'px') {
+        @content;
+    }
+}
+
+@mixin sm-down {
+    @media (max-width: ($break_md - 1) + 'px') {
+        @content;
+    }
+}
+
+@mixin md-only {
+    @media (min-width: $break_md + 'px') and (max-width: ($break_lg - 1) + 'px') {
+        @content;
+    }
+}
+
+@mixin md-up {
+    @media (min-width: $break_md + 'px') {
+        @content;
+    }
+}
+
+@mixin md-down {
+    @media (max-width: ($break_lg - 1) + 'px') {
+        @content;
+    }
+}
+
+@mixin lg-only {
+    @media (min-width: $break_lg + 'px') and (max-width: ($break_xl - 1) + 'px') {
+        @content;
+    }
+}
+
+@mixin lg-up {
+    @media (min-width: $break_lg + 'px') {
+        @content;
+    }
+}
+
+@mixin lg-down {
+    @media (max-width: ($break_xl - 1) + 'px') {
+        @content;
+    }
+}
+
+@mixin xl-up {
+    @media (min-width: $break_xl + 'px') {
+        @content;
+    }
+}
+
+@mixin max($max) {
+    @media (max-width: $max) {
+        @content;
+    }
+}
+
+@mixin min($min) {
+    @media (min-width: $min) {
+        @content;
+    }
+}
+
+@mixin minmax($min, $max) {
+    @media (min-width: $min) and (max-width: $max) {
+        @content;
+    }
+}

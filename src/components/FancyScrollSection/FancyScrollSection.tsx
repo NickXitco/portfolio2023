@@ -1,12 +1,9 @@
-import { FC, Fragment, ReactNode, useEffect, useRef } from 'react'
+import { FC, Fragment, ReactNode, useEffect, useRef, useState } from 'react'
 import styles from './FancyScrollSection.module.scss'
 import { getElementOffsetRelativeToRoot } from '../../utils/boundingBoxHelpers'
 import { map } from '../../utils/mathUtils'
-import artistOBSVideo from '../../assets/artistobs.webm'
-import eightsleep from '../../assets/eightsleep.webm'
-import artfullyscripted from '../../assets/artfully scripted.webm'
-import eoy from '../../assets/eoy.webm'
-import waffle from '../../assets/waffle.webm'
+import cx from 'classnames'
+import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { Link } from 'react-router-dom'
 
 export interface FancyScrollSectionProps {
@@ -30,9 +27,12 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 			const offsetStart = getElementOffsetRelativeToRoot(container)
 			const offsetStop = offsetStart + container.offsetHeight + window.innerHeight
 
-			const scrollPercentage = map(scrollY, offsetStart, offsetStop, 0.25, 2)
+			const offsetPercentage = map(scrollY, offsetStart, offsetStop, 0.25, 2)
 
-			listRef.current.style.setProperty('--scroll-percentage', 100 * (1 - scrollPercentage) + '%')
+			const PARALLAX_AMPLITUDE = 300
+			const parallax = PARALLAX_AMPLITUDE * map(scrollY, offsetStart, offsetStop, -1, 1)
+
+			listRef.current.style.setProperty('--scroll-percentage', 100 * (1 - offsetPercentage) + '%')
 
 			const innerWidth = window.innerWidth
 

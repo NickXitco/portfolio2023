@@ -1,9 +1,4 @@
 import { FC } from 'react'
-import artistOBSVideo from '../../assets/artistobs.webm'
-import eightsleep from '../../assets/eightsleep.webm'
-import artfullyscripted from '../../assets/artfully scripted.webm'
-import waffle from '../../assets/waffle.webm'
-import eoy from '../../assets/eoy.webm'
 import { FancyScrollSection } from '../FancyScrollSection'
 
 export interface DevelopmentProps {}
@@ -28,31 +23,31 @@ export const Development: FC<DevelopmentProps> = (props) => {
 					title: 'The Artist Observatory',
 					description: 'Every artist on Spotify',
 					link: '/project/artist_obs',
-					video: artistOBSVideo,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/artistobs/artistobs.webm',
 				},
 				{
 					title: 'Eight Sleep',
 					description: 'Rebranding the future of sleep',
 					link: '/project/eight-sleep',
-					video: eightsleep,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/eightsleep/eightsleep.webm',
 				},
 				{
 					title: 'Artfully Scripted',
 					description: 'Posters that say thousands of words',
 					link: '/project/artfully-scripted',
-					video: artfullyscripted,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/artfully/artfully%20scripted.webm',
 				},
 				{
 					title: 'Mission Sleep Fitness 2022',
 					description: 'A year of sleep, recapped',
 					link: '/project/eoy',
-					video: eoy,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/eoy/eoy.webm',
 				},
 				{
 					title: 'Waffle Solver',
 					description: 'A one-day project about waffle',
 					link: '/project/waffle',
-					video: waffle,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/waffle/waffle.webm',
 				},
 			]}
 		/>

@@ -57,7 +57,7 @@ body {
 }
 
 html {
-    scroll-behavior: smooth
+    scroll-behavior: smooth;
 }
 
 code {
@@ -77,9 +77,14 @@ a {
     transition: opacity 0.25s ease-in-out;
 }
 
-a:hover {
+a:hover,
+a:focus {
     opacity: 1;
     text-decoration: underline;
+}
+
+button {
+    all: unset;
 }
 
 img {

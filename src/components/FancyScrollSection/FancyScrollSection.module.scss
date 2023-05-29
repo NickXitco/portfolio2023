@@ -2,7 +2,7 @@
     position: relative;
     display: flex;
     align-items: center;
-    
+
     margin-inline: auto;
 
     flex-direction: column;
@@ -52,23 +52,29 @@
 .card {
     display: inline-block;
     margin: 6rem;
+
+    transform: translate3d(0, var(--y), 0) rotate(var(--rotation));
 }
 
-.card a {
+$card_width: 40vw;
+$video_height: 20vw;
+$border_radius: 1rem;
 
+.card a {
     position: relative;
 
     isolation: isolate;
-    width: 40vw;
-
+    width: $card_width;
 
     display: inline-flex;
     flex-direction: column;
     justify-content: space-between;
 
-    border-radius: 1rem;
+    border-radius: $border_radius;
 
     video {
+        width: 100%;
+        height: 100%;
         aspect-ratio: 2 / 1;
         object-fit: cover;
         border-radius: 1rem;
@@ -76,7 +82,8 @@
         box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
         text-decoration: none;
 
         video {
@@ -95,7 +102,7 @@
     }
 
     h4 {
-        font-family: Mori;
+        font-family: Mori, sans-serif;
         font-weight: 400;
         margin: 0;
         font-size: 2rem;

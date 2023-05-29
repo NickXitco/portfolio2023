@@ -1,14 +1,6 @@
 import { FC, useEffect, useRef } from 'react'
-import styles from './Performer.module.scss'
 import { getElementOffsetRelativeToRoot } from '../../utils/boundingBoxHelpers'
 import { map } from '../../utils/mathUtils'
-import newsies from '../../assets/newsies.webm'
-import elf from '../../assets/elf.webm'
-import something_rotten from '../../assets/something_rotten.webm'
-import vc from '../../assets/vc.webm'
-import holidayinn from '../../assets/holiday inn.webm'
-import cabaret from '../../assets/cabaret.webm'
-import pippin from '../../assets/pippin.webm'
 import { FancyScrollSection } from '../FancyScrollSection'
 
 export interface PerformerProps {}
@@ -60,43 +52,43 @@ export const Performer: FC<PerformerProps> = (props) => {
 					title: 'Newsies',
 					description: 'Zilker Theatre Productions',
 					link: '/project/newsies',
-					video: newsies,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/newsies/newsies.webm',
 				},
 				{
 					title: 'Elf',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/elf',
-					video: elf,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/elf/elf.webm',
 				},
 				{
 					title: 'Vocal Chords',
 					description: 'Johns Hopkins University',
 					link: '/project/vc',
-					video: vc,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/vc/vc.webm',
 				},
 				{
 					title: 'Something Rotten',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/something_rotten',
-					video: something_rotten,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/somethingrotten/something_rotten.webm',
 				},
 				{
 					title: 'Holiday Inn',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/holiday_inn',
-					video: holidayinn,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/holiday/holiday%20inn.webm',
 				},
 				{
 					title: 'Cabaret',
 					description: 'JHU Barnstormers',
 					link: '/project/cabaret',
-					video: cabaret,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/cabaret/cabaret.webm',
 				},
 				{
 					title: 'Pippin',
 					description: 'JHU Barnstormers',
 					link: '/project/pippin',
-					video: pippin,
+					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/pippin/pippin.webm',
 				},
 			]}
 		/>

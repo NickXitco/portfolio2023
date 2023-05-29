@@ -1,1 +1,2 @@
-export * from './Boids'
+export * from './BoidsGeo'
+export * from './BoidsRunner'

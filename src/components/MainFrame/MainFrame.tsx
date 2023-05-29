@@ -2,13 +2,11 @@ import { FC, PropsWithChildren, useEffect, useState } from 'react'
 import styles from './MainFrame.module.scss'
 import { AppDispatch, RootState } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
-import grain from '../../assets/1000-90-5-monochrome.png'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ShaderMaterial } from 'three'
 import { Plane } from '@react-three/drei'
 import { Section } from '../../reducers/CurrentSection'
-import { BoidsRunner } from '../Boids'
-import { BoidsGeo } from '../Boids/ShaderBoids'
+import { BoidsGeo, BoidsRunner } from '../Boids'
 
 export interface MainFrameProps extends PropsWithChildren {}
 
@@ -41,9 +39,14 @@ export const MainFrame: FC<MainFrameProps> = (props) => {
 						filter: getFilter(currentSection.value),
 					}}
 				>
-					<img aria-hidden={'true'} src={grain} alt={''} className={styles.grain_texture} />
+					<img
+						aria-hidden={'true'}
+						src={'https://storage.googleapis.com/nick-xitco-portfolio-assets/grain.png'}
+						alt={''}
+						className={styles.grain_texture}
+					/>
 					<Canvas camera={{ position: [0, 0, 350], fov: 75, near: 1, far: 3000 }}>
-						{/*<SwimmingPool />*/}
+						<SwimmingPool />
 						<fog attach="fog" args={[0xffffff, 100, 1000]} />
 						<BoidsRunner />
 						<BoidsGeo />
