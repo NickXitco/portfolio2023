@@ -25,7 +25,7 @@ export const AboutMe: FC<AboutMeProps> = (props) => {
 					</FadeInCenter>
 					<FadeInCenter>
 						<p>
-							I'm Nick, a Developer and Performing Artist whose passion is building amazing experiences
+							I'm Nick, a Developer and Performing Artist whose passion is creating amazing experiences
 							that make people's lives better. I love distilling the most complex problems into elegant
 							designs and solutions, and put people first in everything I do.
 						</p>
