@@ -49,6 +49,11 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 
 				li.style.setProperty('--rotation', rotation + 'deg')
 				li.style.setProperty('--y-offset', yOffset + parallax + 'px')
+
+				if (innerWidth <= 600) {
+					li.style.setProperty('--y-offset', '0px')
+					li.style.setProperty('--rotation', '0deg')
+				}
 			}
 		}
 
@@ -93,15 +98,7 @@ const FancyCard: FC<FancyCardProps> = (props) => (
 		<Link to={props.link}>
 			{props.picture ? <img src={props.picture} alt={props.title} /> : null}
 			{props.video ? (
-				<video
-					src={props.video + '?fm=mp4&res=low'}
-					muted
-					autoPlay
-					loop
-					playsInline
-					disableRemotePlayback
-					disablePictureInPicture
-				/>
+				<video src={props.video + '?fm=mp4&res=medium'} muted autoPlay loop playsInline disableRemotePlayback />
 			) : null}
 			<div className={styles.text}>
 				<h3>{props.title}</h3>

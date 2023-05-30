@@ -88,6 +88,7 @@
         margin: 0;
         flex-direction: column;
         transform: none !important;
+        overflow: hidden;
     }
 }
 
@@ -100,6 +101,7 @@
     @include xs-only {
         margin: 2rem;
         transform: none !important;
+        width: calc(100% - 4rem);
     }
 }
 

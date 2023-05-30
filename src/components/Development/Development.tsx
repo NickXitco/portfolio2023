@@ -27,31 +27,31 @@ export const Development: FC<DevelopmentProps> = (props) => {
 					title: 'The Artist Observatory',
 					description: 'Every artist on Spotify',
 					link: '/project/artist_obs',
-					video: 'https://nickxitcoportfolio.imgix.net/artistobs/artistobs.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/artistobs/artistobs.mp4',
 				},
 				{
 					title: 'Eight Sleep',
 					description: 'Rebranding the future of sleep',
 					link: '/project/eight-sleep',
-					video: 'https://nickxitcoportfolio.imgix.net/eightsleep/eightsleep.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/eightsleep/eightsleep.mp4',
 				},
 				{
 					title: 'Artfully Scripted',
 					description: 'Posters that say thousands of words',
 					link: '/project/artfully-scripted',
-					video: 'https://nickxitcoportfolio.imgix.net/artfully/artfully%20scripted.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/artfully/artfully%20scripted.mp4',
 				},
 				{
 					title: 'Mission Sleep Fitness',
 					description: 'A year of sleep, recapped',
 					link: '/project/eoy',
-					video: 'https://nickxitcoportfolio.imgix.net/eoy/eoy.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/eoy/eoy.mp4',
 				},
 				{
 					title: 'Waffle Solver',
 					description: 'A one-day project about waffle',
 					link: '/project/waffle',
-					video: 'https://nickxitcoportfolio.imgix.net/waffle/waffle.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/waffle/waffle.mp4',
 				},
 			]}
 		/>

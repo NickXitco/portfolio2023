@@ -23,7 +23,7 @@ export const projects: Project[] = [
 		description: 'Reviews',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/newsies/newsies.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/newsies/newsies.mp4',
 				alt: '',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/newsies/proshot_thumbnail',
@@ -101,7 +101,7 @@ export const projects: Project[] = [
 		description: 'Reviews',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/elf/elf.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/elf/elf.mp4',
 				alt: '',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/elf/elfthumb.png',
@@ -157,7 +157,7 @@ export const projects: Project[] = [
 		description: 'Johns Hopkins University',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/vc/vc.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/vc/vc.mp4',
 				alt: '',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/vc/vcthumb.png',
@@ -192,7 +192,7 @@ export const projects: Project[] = [
 		description: 'Reviews',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/somethingrotten/something_rotten.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/somethingrotten/something_rotten.mp4',
 				alt: '',
 				video: true,
 			},
@@ -252,7 +252,7 @@ export const projects: Project[] = [
 		description: 'Reviews',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/holiday/holiday%20inn.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/holiday/holiday%20inn.mp4',
 				alt: '',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/holiday/holiday%20inn%20thumb.png',
@@ -317,7 +317,7 @@ export const projects: Project[] = [
 		description: 'Reviews',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/cabaret/cabaret.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/cabaret/cabaret.mp4',
 				alt: '',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/cabaret/kabaretthumb.png',
@@ -382,7 +382,7 @@ export const projects: Project[] = [
 		description: 'Reviews',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/pippin/pippin.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/pippin/pippin.mp4',
 				alt: '',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/pippin/pippin%20thumb.png',
@@ -447,7 +447,7 @@ export const projects: Project[] = [
 		description: 'Every artist on Spotify',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/artistobs/artistobs.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/artistobs/artistobs.mp4',
 				alt: 'A video exploring the Artist Observatory',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/artistobs/obsthumb',
@@ -515,13 +515,13 @@ export const projects: Project[] = [
 		description: 'Rebranding the future of sleep',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/eightsleep/eightsleep.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/eightsleep/eightsleep.mp4',
 				alt: "A video exploring Eight Sleep's new brand",
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/eightsleep/homepagethumb.jpg',
 			},
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/eightsleep/eightsleepvideo2.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/eightsleep/eightsleepvideo2.mp4',
 				alt: '',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/eightsleep/clockthumb.png',
@@ -591,7 +591,7 @@ export const projects: Project[] = [
 		description: 'Posters that say thousands of words',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/artfully/artfully%20scripted.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/artfully/artfully%20scripted.mp4',
 				alt: 'A video exploring the Etsy Shop',
 				video: true,
 				thumb: 'https://nickxitcoportfolio.imgix.net/artfully/as_thumb.jpg',
@@ -651,7 +651,7 @@ export const projects: Project[] = [
 		description: 'A year of sleep, recapped',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/eoy/eoy.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/eoy/eoy.mp4',
 				alt: '',
 				video: true,
 				thumb: '',
@@ -719,7 +719,7 @@ export const projects: Project[] = [
 		description: 'A one-day project about waffle',
 		imageGridItems: [
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/waffle/waffle.webm',
+				src: 'https://nickxitcoportfolio.imgix.net/waffle/waffle.mp4',
 				alt: '',
 				video: true,
 			},
