@@ -58,8 +58,11 @@
 }
 
 .super_fancy_window {
+    position: sticky;
+    top: 0;
     width: 100%;
-    position: absolute;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
 
@@ -79,7 +82,7 @@
     justify-content: center;
     align-items: center;
 
-    transform: translate3d(var(--scroll-percentage), var(--sticky-offset), 0);
+    transform: translate3d(var(--scroll-percentage), 0, 0);
 
     @include xs-only {
         margin: 0;

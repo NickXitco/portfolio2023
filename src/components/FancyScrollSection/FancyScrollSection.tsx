@@ -16,7 +16,6 @@ export interface FancyScrollSectionProps {
 export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 	const containerRef = useRef<HTMLDivElement>(null)
 	const textRef = useRef<HTMLDivElement>(null)
-	const windowRef = useRef<HTMLDivElement>(null)
 	const listRef = useRef<HTMLUListElement>(null)
 
 	const lowFPS = useSelector((state: RootState) => state.lowFPS)
@@ -26,15 +25,11 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 			const scrollY = window.scrollY
 			const container = containerRef.current
 			const list = listRef.current
-			const text = textRef.current
-			const w = windowRef.current
-			if (!container || !list || !w) return
+			if (!container || !list) return
 
 			if (container.getBoundingClientRect().top > window.innerHeight) {
 				return
 			}
-
-			const windowOffset = getElementOffsetRelativeToRoot(w)
 
 			const offsetStart = getElementOffsetRelativeToRoot(container)
 			const offsetStop = offsetStart + container.offsetHeight + window.innerHeight
@@ -45,7 +40,6 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 			const parallax = PARALLAX_AMPLITUDE * map(scrollY, offsetStart, offsetStop, -1, 1)
 
 			listRef.current.style.setProperty('--scroll-percentage', 100 * (1 - offsetPercentage) + '%')
-			listRef.current.style.setProperty('--sticky-offset', (scrollY - windowOffset) + 'px')
 
 			const innerWidth = window.innerWidth
 
@@ -88,7 +82,7 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 
 				{props.description}
 			</div>
-			<div className={styles.super_fancy_window} ref={windowRef}>
+			<div className={styles.super_fancy_window}>
 				<ul className={styles.super_fancy_card_list} ref={listRef}>
 					{props.cards.map((card, index) => {
 						return (
