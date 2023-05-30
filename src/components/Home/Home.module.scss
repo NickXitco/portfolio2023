@@ -1,4 +1,21 @@
+@import "src/mixins";
+
+.container {
+    position: relative;
+    max-width: 1650px;
+    overflow: hidden;
+
+
+    @include sm-down {
+        flex-direction: column;
+        gap: 4rem;
+    }
+}
+
 .header {
+    margin: 0 4rem;
+    position: absolute;
+    left: 0;
     font-weight: 500;
     font-size: 6rem;
     display: grid;
@@ -15,8 +32,9 @@
         a {
             opacity: 1;
 
-            &:hover {
-                text-decoration: none;
+            &:hover,
+            &:focus {
+                text-decoration: none !important;
             }
         }
 
@@ -33,9 +51,30 @@
         user-select: none;
         pointer-events: none;
     }
+
+    @include sm-down {
+        position: static;
+        font-size: clamp(2rem, 12vw, 4rem);
+    }
+}
+
+.text {
+    position: absolute;
+    margin-left: 40rem;
+    margin-right: 4rem;
+    right: 0;
+    text-align: right;
+
+
+    @include sm-down {
+        position: static;
+        margin-left: 4rem;
+        text-align: left;
+    }
 }
 
 .subtitle {
+
     font-size: 2rem;
     margin: 0;
     font-weight: 500;
@@ -45,6 +84,6 @@
     font-size: 1rem;
     font-style: italic;
     margin: 0;
-    text-align: right;
+
 }
 

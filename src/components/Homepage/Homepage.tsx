@@ -9,7 +9,9 @@ import { Section, setCurrentSection } from '../../reducers/CurrentSection'
 import { getVisibleAmount } from '../../utils/boundingBoxHelpers'
 import { useDispatch } from 'react-redux'
 
-export interface HomepageProps {}
+export interface HomepageProps {
+	visible?: boolean
+}
 
 export const Homepage: FC<HomepageProps> = (props) => {
 	const appDispatch = useDispatch()
@@ -41,7 +43,12 @@ export const Homepage: FC<HomepageProps> = (props) => {
 	}, [appDispatch])
 
 	return (
-		<div className={styles.container}>
+		<div
+			className={styles.container}
+			style={{
+				opacity: props.visible ? 1 : 0,
+			}}
+		>
 			<section id={'home'}>
 				<Home />
 			</section>

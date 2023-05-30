@@ -1,12 +1,13 @@
 import { FC } from 'react'
 import styles from './Home.module.scss'
 import { Signature } from '../../assets/Signature'
+import cx from 'classnames'
 
 export interface HomeProps {}
 
 export const Home: FC<HomeProps> = (props) => {
 	return (
-		<div className={'section_wrapper'}>
+		<div className={cx('section_wrapper', styles.container)}>
 			<header className={styles.header}>
 				<h1>
 					<a href={'#about'}>
@@ -16,7 +17,7 @@ export const Home: FC<HomeProps> = (props) => {
 				</h1>
 				<Signature />
 			</header>
-			<div>
+			<div className={styles.text}>
 				<h2 className={styles.subtitle}>
 					<a href={'#developer'}>Developer</a> & <a href={'#performer'}>Performer</a> based out of Austin
 				</h2>

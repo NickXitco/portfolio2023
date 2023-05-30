@@ -2,6 +2,8 @@ import { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './ProjectView.module.scss'
 import { Project } from '../../assets/projects'
+import cx from 'classnames'
+import { Img } from '../Img'
 
 export interface ProjectViewProps {
 	project?: Project
@@ -96,23 +98,27 @@ const ImageGrid: FC<ImageGridProps> = (props) => {
 	const activeItem = props.items[activeIndex]
 	return (
 		<div className={styles.image_grid}>
-			<div className={styles.active}>
+			<div className={cx(styles.active, { [styles.single_item]: props.items.length === 1 })}>
 				{activeItem.video ? (
 					<video src={activeItem.src} muted autoPlay loop playsInline />
 				) : (
-					<img src={activeItem.src} alt={activeItem.alt} />
+					<Img src={activeItem.src} alt={activeItem.alt} dprHeight={600} objectFit={'cover'} />
 				)}
 			</div>
-			{props.items.map((item, index) => (
-				<button
-					key={index}
-					className={styles.thumb}
-					onClick={() => setActiveIndex(index)}
-					aria-label={`View ${item.alt}`}
-				>
-					<img src={item.thumb || item.src} alt={item.alt} />
-				</button>
-			))}
+			{props.items.length > 1 &&
+				props.items.map((item, index) => (
+					<button
+						key={index}
+						className={styles.thumb}
+						style={{
+							filter: index === activeIndex ? 'brightness(1)' : '',
+						}}
+						onClick={() => setActiveIndex(index)}
+						aria-label={`View ${item.alt}`}
+					>
+						<Img src={item.thumb || item.src} alt={item.alt} dprHeight={300} objectFit={'cover'} />
+					</button>
+				))}
 		</div>
 	)
 }

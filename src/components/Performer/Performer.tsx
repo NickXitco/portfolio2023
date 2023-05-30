@@ -42,8 +42,10 @@ export const Performer: FC<PerformerProps> = (props) => {
 						of theatre in Baltimore and Austin.
 					</p>
 					<p>
-						Keep scrolling to check out some of my projects, or look at my <a href={'google.com'}>resume</a>
-						.
+						Keep scrolling to check out some of my projects, or look at my{' '}
+						<a href={'https://storage.googleapis.com/nick-xitco-portfolio-assets/Performance%20Resume.pdf'}>
+							resume
+						</a>
 					</p>
 				</>
 			}
@@ -52,43 +54,43 @@ export const Performer: FC<PerformerProps> = (props) => {
 					title: 'Newsies',
 					description: 'Zilker Theatre Productions',
 					link: '/project/newsies',
-					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/newsies/newsies.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/newsies/newsies.webm',
 				},
 				{
 					title: 'Elf',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/elf',
-					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/elf/elf.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/elf/elf.webm',
 				},
 				{
 					title: 'Vocal Chords',
 					description: 'Johns Hopkins University',
 					link: '/project/vc',
-					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/vc/vc.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/vc/vc.webm',
 				},
 				{
 					title: 'Something Rotten',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/something_rotten',
-					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/somethingrotten/something_rotten.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/somethingrotten/something_rotten.webm',
 				},
 				{
 					title: 'Holiday Inn',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/holiday_inn',
-					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/holiday/holiday%20inn.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/holiday/holiday%20inn.webm',
 				},
 				{
 					title: 'Cabaret',
 					description: 'JHU Barnstormers',
 					link: '/project/cabaret',
-					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/cabaret/cabaret.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/cabaret/cabaret.webm',
 				},
 				{
 					title: 'Pippin',
 					description: 'JHU Barnstormers',
 					link: '/project/pippin',
-					video: 'https://storage.googleapis.com/nick-xitco-portfolio-assets/pippin/pippin.webm',
+					video: 'https://nickxitcoportfolio.imgix.net/pippin/pippin.webm',
 				},
 			]}
 		/>

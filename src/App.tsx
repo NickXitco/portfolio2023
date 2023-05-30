@@ -17,7 +17,7 @@ const App = () => {
 	return (
 		<main>
 			<MainFrame>
-				<Homepage />
+				<Homepage visible={!showProjectView} />
 			</MainFrame>
 			<ProjectView project={project} visible={showProjectView} />
 		</main>

@@ -1,3 +1,5 @@
+@import "src/mixins";
+
 .container {
     position: relative;
     display: flex;
@@ -9,7 +11,10 @@
     justify-content: flex-start;
     height: 500vh;
 
-    //overflow: auto;
+    @include xs-only {
+        align-items: flex-start;
+        height: auto;
+    }
 }
 
 
@@ -24,6 +29,32 @@
         font-size: 2rem;
         max-width: 36ch;
     }
+
+    padding: 4rem;
+
+    @include sm-down {
+        @include smallsection;
+        box-sizing: border-box;
+
+        h2 {
+            font-size: 6rem;
+        }
+
+        p {
+            font-size: 1.5rem;
+        }
+    }
+
+    @include xs-only {
+        padding: 2rem;
+        h2 {
+            font-size: 4rem;
+        }
+
+        p {
+            font-size: 1rem;
+        }
+    }
 }
 
 .super_fancy_window {
@@ -34,6 +65,11 @@
     overflow: hidden;
     display: flex;
     justify-content: center;
+
+    @include xs-only {
+        height: auto;
+        position: relative;
+    }
 }
 
 
@@ -47,24 +83,30 @@
     align-items: center;
 
     transform: translate3d(var(--scroll-percentage), 0, 0);
+
+    @include xs-only {
+        margin: 0;
+        flex-direction: column;
+        transform: none !important;
+    }
 }
 
 .card {
     display: inline-block;
     margin: 6rem;
 
-    transform: translate3d(0, var(--y), 0) rotate(var(--rotation));
+    @include xs-only {
+        margin: 2rem;
+    }
 }
 
-$card_width: 40vw;
-$video_height: 20vw;
 $border_radius: 1rem;
 
 .card a {
     position: relative;
 
     isolation: isolate;
-    width: $card_width;
+    width: min(90vw, 60rem);
 
     display: inline-flex;
     flex-direction: column;
@@ -90,6 +132,10 @@ $border_radius: 1rem;
             box-shadow: rgba(255, 255, 255, 0.5) 0 0 8px;
         }
     }
+
+    @include xs-only {
+        width: 100%;
+    }
 }
 
 .text {
@@ -106,5 +152,25 @@ $border_radius: 1rem;
         font-weight: 400;
         margin: 0;
         font-size: 2rem;
+    }
+
+    @include sm-down {
+        h3 {
+            font-size: 3rem;
+        }
+
+        h4 {
+            font-size: 1.5rem;
+        }
+    }
+
+    @include xs-only {
+        h3 {
+            font-size: 2rem;
+        }
+
+        h4 {
+            font-size: 1rem;
+        }
     }
 }

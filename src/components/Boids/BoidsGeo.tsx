@@ -39,13 +39,16 @@ class BoidGeometry extends BufferGeometry {
 
 		const wingsSpan = 20
 
+		const BODY_BACK = 20
+		const BODY_TIP = 30
+		const WING_TIP = 15
 		for (let f = 0; f < NUM_BOIDS; f++) {
 			// Body
-			pushVertices([0, -0, -20, 0, 4, -20, 0, 0, 30])
+			pushVertices([0, -0, -BODY_BACK, 0, 4, -BODY_BACK, 0, 0, BODY_TIP])
 
 			// Wings
-			pushVertices([0, 0, -15, -wingsSpan, 0, 0, 0, 0, 15])
-			pushVertices([0, 0, 15, wingsSpan, 0, 0, 0, 0, -15])
+			pushVertices([0, 0, -WING_TIP, -wingsSpan, 0, 0, 0, 0, WING_TIP])
+			pushVertices([0, 0, WING_TIP, wingsSpan, 0, 0, 0, 0, -WING_TIP])
 		}
 
 		for (let v = 0; v < triangles * 3; v++) {

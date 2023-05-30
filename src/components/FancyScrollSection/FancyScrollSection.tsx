@@ -1,9 +1,7 @@
-import { FC, Fragment, ReactNode, useEffect, useRef, useState } from 'react'
+import { FC, Fragment, ReactNode, useEffect, useRef } from 'react'
 import styles from './FancyScrollSection.module.scss'
 import { getElementOffsetRelativeToRoot } from '../../utils/boundingBoxHelpers'
 import { map } from '../../utils/mathUtils'
-import cx from 'classnames'
-import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import { Link } from 'react-router-dom'
 
 export interface FancyScrollSectionProps {
@@ -30,7 +28,7 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 			const offsetPercentage = map(scrollY, offsetStart, offsetStop, 0.25, 2)
 
 			const PARALLAX_AMPLITUDE = 300
-			const parallax = PARALLAX_AMPLITUDE * map(scrollY, offsetStart, offsetStop, -1, 1)
+			const parallax = PARALLAX_AMPLITUDE * map(scrollY, offsetStart, offsetStop, -0.5, 1)
 
 			listRef.current.style.setProperty('--scroll-percentage', 100 * (1 - offsetPercentage) + '%')
 
@@ -44,11 +42,12 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 				const xCenter = liBoundingRect.left + width / 2
 				const xThrough = map(xCenter, -width, innerWidth + width, -1, 1)
 
-				const amplitude = 600
+				const amplitude = 1000
 				const yOffset = (Math.cos(xThrough) - 1) * -amplitude
-				const rotation = Math.sin(-xThrough) * -Math.PI * 4
+				const rotationModifier = 18600 / (window.innerWidth + 1000) + 2.5
+				const rotation = Math.sin(-xThrough) * -Math.PI * rotationModifier
 
-				li.style.transform = `translateY(${yOffset}px) rotate(${rotation}deg)`
+				li.style.transform = `translateY(${yOffset + parallax}px) rotate(${rotation}deg)`
 			}
 		}
 
@@ -92,7 +91,7 @@ const FancyCard: FC<FancyCardProps> = (props) => (
 	<li className={styles.card}>
 		<Link to={props.link}>
 			{props.picture ? <img src={props.picture} alt={props.title} /> : null}
-			{props.video ? <video src={props.video} muted autoPlay loop playsInline /> : null}
+			{props.video ? <video src={props.video + '?fm=mp4&res=low'} muted autoPlay loop playsInline /> : null}
 			<div className={styles.text}>
 				<h3>{props.title}</h3>
 				<h4>{props.description}</h4>

@@ -11,9 +11,6 @@ import { BoidsGeo, BoidsRunner } from '../Boids'
 export interface MainFrameProps extends PropsWithChildren {}
 
 export const MainFrame: FC<MainFrameProps> = (props) => {
-	const dispatch: AppDispatch = useDispatch<AppDispatch>()
-
-	const hoveredLink = useSelector((state: RootState) => state.hoveredLink)
 	const currentSection = useSelector((state: RootState) => state.currentSection)
 
 	return (
@@ -30,6 +27,9 @@ export const MainFrame: FC<MainFrameProps> = (props) => {
 					<li>
 						<a href={'#workwithme'}>email</a>
 					</li>
+					<li>
+						<a href={'#home'}>top</a>
+					</li>
 				</ul>
 			</nav>
 			<div className={styles.floater}>
@@ -41,7 +41,7 @@ export const MainFrame: FC<MainFrameProps> = (props) => {
 				>
 					<img
 						aria-hidden={'true'}
-						src={'https://storage.googleapis.com/nick-xitco-portfolio-assets/grain.png'}
+						src={'https://nickxitcoportfolio.imgix.net/grain.png'}
 						alt={''}
 						className={styles.grain_texture}
 					/>

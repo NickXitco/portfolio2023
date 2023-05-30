@@ -1,17 +1,20 @@
-import { FC, LegacyRef, PropsWithRef } from 'react'
+import { FC } from 'react'
 import styles from './AboutMe.module.scss'
-import headshot from '../../assets/headshot.jpg'
+import { Img } from '../Img'
+import cx from 'classnames'
 
 export interface AboutMeProps {}
 
 export const AboutMe: FC<AboutMeProps> = (props) => {
 	return (
-		<div id={'about'} className={'section_wrapper'}>
+		<div id={'about'} className={cx(styles.container, 'section_wrapper')}>
 			<div className={styles.about_me}>
 				<div className={styles.headshot_wrapper}>
-					<img
-						src={'https://storage.googleapis.com/nick-xitco-portfolio-assets/headshot.jpg'}
+					<Img
+						src={'https://nickxitcoportfolio.imgix.net/headshot.jpg?auto=format'}
 						alt={'Me! Nick!'}
+						dprHeight={1000}
+						objectFit={'cover'}
 					/>
 				</div>
 
