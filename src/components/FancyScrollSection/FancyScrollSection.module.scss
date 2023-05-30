@@ -59,15 +59,20 @@
 
 .super_fancy_window {
     position: sticky;
-    top: 0;
+    top: -200px;
     width: 100%;
-    height: 100vh;
+
     overflow: hidden;
     display: flex;
     justify-content: center;
 
+    height: calc(100vh + 400px);
+    margin: -200px 0;
+
     @include xs-only {
         height: auto;
+        margin: auto;
+        top: 0;
         position: relative;
     }
 }

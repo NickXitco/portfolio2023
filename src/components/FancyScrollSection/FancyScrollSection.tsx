@@ -36,7 +36,7 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 
 			const offsetPercentage = map(scrollY, offsetStart, offsetStop, 0.25, 2)
 
-			const PARALLAX_AMPLITUDE = window.innerHeight / 5
+			const PARALLAX_AMPLITUDE = 200
 			const parallax = PARALLAX_AMPLITUDE * map(scrollY, offsetStart, offsetStop, -1, 1)
 
 			listRef.current.style.setProperty('--scroll-percentage', 100 * (1 - offsetPercentage) + '%')
