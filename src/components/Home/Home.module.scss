@@ -1,9 +1,17 @@
 @import "src/mixins";
 
 .container {
+    box-sizing: border-box;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
     max-width: 1650px;
     overflow: hidden;
+
+    min-height: 100vh;
+    margin-inline: auto;
 
 
     @include sm-down {

@@ -7,7 +7,7 @@ export interface HomeProps {}
 
 export const Home: FC<HomeProps> = (props) => {
 	return (
-		<div className={cx('section_wrapper', styles.container)}>
+		<div className={cx(styles.container)}>
 			<header className={styles.header}>
 				<h1>
 					<a href={'#about'}>

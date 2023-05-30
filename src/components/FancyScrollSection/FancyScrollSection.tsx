@@ -36,8 +36,8 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 
 			const offsetPercentage = map(scrollY, offsetStart, offsetStop, 0.25, 2)
 
-			const PARALLAX_AMPLITUDE = 300
-			const parallax = PARALLAX_AMPLITUDE * map(scrollY, offsetStart, offsetStop, -0.5, 1)
+			const PARALLAX_AMPLITUDE = window.innerHeight / 5
+			const parallax = PARALLAX_AMPLITUDE * map(scrollY, offsetStart, offsetStop, -1, 1)
 
 			listRef.current.style.setProperty('--scroll-percentage', 100 * (1 - offsetPercentage) + '%')
 
@@ -52,12 +52,12 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 				const xThrough = map(xCenter, -width, innerWidth + width, -1, 1)
 
 				const amplitude = 1000
-				const yOffset = (Math.cos(xThrough) - 1) * -amplitude
+				const sinY = (Math.cos(xThrough) - 1) * -amplitude
 				const rotationModifier = 18600 / (window.innerWidth + 1000) + 2.5
 				const rotation = Math.sin(-xThrough) * -Math.PI * rotationModifier
 
 				li.style.setProperty('--rotation', rotation + 'deg')
-				li.style.setProperty('--y-offset', yOffset + parallax + 'px')
+				li.style.setProperty('--y-offset', sinY + parallax + 'px')
 
 				if (innerWidth <= 600) {
 					li.style.setProperty('--y-offset', '0px')

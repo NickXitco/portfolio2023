@@ -2,6 +2,12 @@
 
 
 .container {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto;
     padding: 4rem;
 
     @include sm-down {
@@ -17,15 +23,12 @@
 
 .about_me {
     display: grid;
-    grid-template-columns: 50rem 1fr;
+    grid-template-columns: min(50rem, 50vw) 1fr;
     gap: 4rem;
-
-    height: 70vh;
 
     @include sm-down {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto;
-        height: auto;
     }
 
     @include xs-only {
@@ -38,6 +41,7 @@
     overflow: hidden;
     border-radius: 25rem 25rem 5rem 0;
 
+    max-height: 100vh;
 
     box-shadow: rgba(0, 0, 0, 0.75) 0 0 0 4px, rgba(255, 255, 255, 0.25) 1rem 1rem 0 4px;
 
@@ -58,13 +62,13 @@
 
 .about_me_text {
     h2 {
-        font-size: 10rem;
+        font-size: clamp(6rem, 10vw, 10rem);
         margin: 0 0 1rem;
     }
 
     p {
         font-family: Mori, sans-serif;
-        font-size: 2rem;
+        font-size: clamp(1rem, 2vw, 2rem);
         max-width: 40ch;
         line-height: 1.2;
     }

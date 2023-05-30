@@ -63,14 +63,3 @@ img {
     max-width: 100%;
     object-fit: cover;
 }
-
-.section_wrapper {
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 100vh;
-    margin-inline: auto;
-}

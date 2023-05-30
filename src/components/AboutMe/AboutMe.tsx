@@ -8,7 +8,7 @@ export interface AboutMeProps {}
 
 export const AboutMe: FC<AboutMeProps> = (props) => {
 	return (
-		<div id={'about'} className={cx(styles.container, 'section_wrapper')}>
+		<div id={'about'} className={cx(styles.container)}>
 			<div className={styles.about_me}>
 				<div className={styles.headshot_wrapper}>
 					<Img
