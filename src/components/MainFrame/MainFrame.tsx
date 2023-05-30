@@ -50,9 +50,9 @@ export const MainFrame: FC<MainFrameProps> = (props) => {
 						className={styles.grain_texture}
 						dprHeight={1000}
 					/>
-					{lowFPS.value ? (
-						<div className={styles.fallback} />
-					) : (
+
+					<div className={styles.fallback} />
+					{!lowFPS.value && (
 						<Canvas camera={{ position: [0, 0, 350], fov: 75, near: 1, far: 3000 }}>
 							<SwimmingPool />
 							<fog attach="fog" args={[0xffffff, 100, 1000]} />

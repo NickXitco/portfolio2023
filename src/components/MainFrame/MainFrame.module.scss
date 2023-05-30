@@ -83,6 +83,8 @@
     width: 100%;
     height: 100%;
     opacity: 0.8;
+    position: absolute;
+    z-index: -2;
     background-image: linear-gradient(
                     100deg,
                     hsl(208deg 100% 70%) 0%,
