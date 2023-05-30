@@ -14,11 +14,11 @@ export const Development: FC<DevelopmentProps> = (props) => {
 						exploring new languages, tools, and libraries in my free time.
 					</p>
 					<p>
-						Keep scrolling to check out my work! Or click{' '}
-						<a href={'https://storage.googleapis.com/nick-xitco-portfolio-assets/Performance%20Resume.pdf'}>
-							here
-						</a>{' '}
-						for my resume!
+						Keep scrolling to check out my work! Or check out{' '}
+						<a href={'https://storage.googleapis.com/nick-xitco-portfolio-assets/Resume%20May%202023.pdf'}>
+							my resume
+						</a>
+						!
 					</p>
 				</>
 			}

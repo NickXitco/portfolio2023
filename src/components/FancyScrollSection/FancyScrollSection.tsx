@@ -47,7 +47,8 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 				const rotationModifier = 18600 / (window.innerWidth + 1000) + 2.5
 				const rotation = Math.sin(-xThrough) * -Math.PI * rotationModifier
 
-				li.style.transform = `translateY(${yOffset + parallax}px) rotate(${rotation}deg)`
+				li.style.setProperty('--rotation', rotation + 'deg')
+				li.style.setProperty('--y-offset', yOffset + parallax + 'px')
 			}
 		}
 

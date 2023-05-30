@@ -95,8 +95,11 @@
     display: inline-block;
     margin: 6rem;
 
+    transform: translate3d(0, var(--y-offset), 0) rotate(var(--rotation));
+
     @include xs-only {
         margin: 2rem;
+        transform: none !important;
     }
 }
 

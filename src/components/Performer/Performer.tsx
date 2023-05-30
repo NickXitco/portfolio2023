@@ -44,8 +44,9 @@ export const Performer: FC<PerformerProps> = (props) => {
 					<p>
 						Keep scrolling to check out some of my projects, or look at my{' '}
 						<a href={'https://storage.googleapis.com/nick-xitco-portfolio-assets/Performance%20Resume.pdf'}>
-							resume
+							performance resume
 						</a>
+						!
 					</p>
 				</>
 			}

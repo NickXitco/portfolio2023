@@ -7,6 +7,7 @@ import { ShaderMaterial } from 'three'
 import { Plane } from '@react-three/drei'
 import { Section } from '../../reducers/CurrentSection'
 import { BoidsGeo, BoidsRunner } from '../Boids'
+import { Img } from '../Img'
 
 export interface MainFrameProps extends PropsWithChildren {}
 
@@ -39,11 +40,12 @@ export const MainFrame: FC<MainFrameProps> = (props) => {
 						filter: getFilter(currentSection.value),
 					}}
 				>
-					<img
+					<Img
 						aria-hidden={'true'}
 						src={'https://nickxitcoportfolio.imgix.net/grain.png'}
 						alt={''}
 						className={styles.grain_texture}
+						dprHeight={1000}
 					/>
 					<Canvas camera={{ position: [0, 0, 350], fov: 75, near: 1, far: 3000 }}>
 						<SwimmingPool />

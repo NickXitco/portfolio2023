@@ -8,36 +8,8 @@
 @font-face {
     font-family: 'Eiko';
     font-style: normal;
-    font-weight: 400;
-    src: url("fonts/PPEiko-Regular.ttf")
-}
-
-@font-face {
-    font-family: 'Eiko';
-    font-style: normal;
     font-weight: 700;
     src: url("fonts/PPEiko-Heavy.ttf")
-}
-
-@font-face {
-    font-family: 'Eiko';
-    font-style: normal;
-    font-weight: 800;
-    src: url("fonts/PPEiko-Black.ttf")
-}
-
-@font-face {
-    font-family: 'Eiko';
-    font-style: normal;
-    font-weight: 300;
-    src: url("fonts/PPEiko-Light.ttf")
-}
-
-@font-face {
-    font-family: 'Eiko';
-    font-style: normal;
-    font-weight: 200;
-    src: url("fonts/PPEiko-Thin.ttf")
 }
 
 @font-face {
