@@ -32,23 +32,4 @@ fs.writeFileSync(path.join(componentDir, `${componentName}.module.scss`), '.cont
 const indexContent = `export * from './${componentName}'`
 fs.writeFileSync(path.join(componentDir, `index.ts`), indexContent, 'utf8')
 
-const storyContent = `import { Meta } from '@storybook/react'
-import { ${componentName} as Component, ${componentName}Props } from './${componentName}'
-
-// noinspection JSUnusedGlobalSymbols
-export default {
-\ttitle: '${componentName}',
-\tcomponent: Component,
-} as Meta<typeof Component>
-
-export const ${componentName} = (args: any) => <Component {...args} />
-
-const args: ${componentName}Props = {
-}
-
-${componentName}.args = args
-`
-
-fs.writeFileSync(path.join(componentDir, `${componentName}.stories.tsx`), storyContent, 'utf8')
-
 console.log(`Component ${componentName} created successfully!`)

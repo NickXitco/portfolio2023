@@ -50,7 +50,7 @@ a {
 }
 
 a:hover,
-a:focus {
+a:focus-visible {
     opacity: 1;
     text-decoration: underline;
 }

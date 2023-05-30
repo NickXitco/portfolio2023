@@ -58,11 +58,8 @@
 }
 
 .super_fancy_window {
-    position: sticky;
-    top: 0;
     width: 100%;
-    height: 100vh;
-    overflow: hidden;
+    position: absolute;
     display: flex;
     justify-content: center;
 
@@ -82,7 +79,7 @@
     justify-content: center;
     align-items: center;
 
-    transform: translate3d(var(--scroll-percentage), 0, 0);
+    transform: translate3d(var(--scroll-percentage), var(--sticky-offset), 0);
 
     @include xs-only {
         margin: 0;
@@ -130,7 +127,7 @@ $border_radius: 1rem;
     }
 
     &:hover,
-    &:focus {
+    &:focus-visible {
         text-decoration: none;
 
         video {

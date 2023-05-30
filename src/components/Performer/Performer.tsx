@@ -8,31 +8,6 @@ import { findProject } from '../../assets/projects'
 export interface PerformerProps {}
 
 export const Performer: FC<PerformerProps> = (props) => {
-	const containerRef = useRef<HTMLDivElement>(null)
-	const listRef = useRef<HTMLUListElement>(null)
-
-	useEffect(() => {
-		const scrollHandler = () => {
-			const scrollY = window.scrollY
-			const container = containerRef.current
-			const list = listRef.current
-			if (!container || !list) return
-
-			const offsetStart = getElementOffsetRelativeToRoot(container)
-			const offsetStop = offsetStart + container.offsetHeight + window.innerHeight
-
-			const scrollPercentage = map(scrollY, offsetStart, offsetStop, 0.25, 2)
-
-			listRef.current.style.setProperty('--scroll-percentage', 100 * (1 - scrollPercentage) + '%')
-		}
-
-		window.addEventListener('scroll', scrollHandler, { passive: true })
-
-		return () => {
-			window.removeEventListener('scroll', scrollHandler)
-		}
-	}, [])
-
 	return (
 		<FancyScrollSection
 			title={'Performer'}

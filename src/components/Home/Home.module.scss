@@ -41,7 +41,7 @@
             opacity: 1;
 
             &:hover,
-            &:focus {
+            &:focus-visible {
                 text-decoration: none !important;
             }
         }
