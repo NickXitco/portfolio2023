@@ -71,4 +71,29 @@
     object-fit: cover;
     opacity: 1;
 
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+}
+
+.fallback {
+    width: 100%;
+    height: 100%;
+    opacity: 0.8;
+    background-image: linear-gradient(
+                    100deg,
+                    hsl(208deg 100% 70%) 0%,
+                    hsl(209deg 100% 67%) 4%,
+                    hsl(212deg 100% 66%) 11%,
+                    hsl(215deg 100% 65%) 19%,
+                    hsl(221deg 100% 67%) 30%,
+                    hsl(229deg 100% 69%) 42%,
+                    hsl(240deg 94% 71%) 57%,
+                    hsl(253deg 86% 66%) 72%,
+                    hsl(266deg 78% 59%) 87%,
+                    hsl(279deg 71% 51%) 100%
+    );
 }

@@ -167,7 +167,7 @@ export const projects: Project[] = [
 				alt: '',
 			},
 			{
-				src: 'https://nickxitcoportfolio.imgix.net/vc/vc3.jpg',
+				src: 'https://nickxitcoportfolio.imgix.net/vc/vc3_crop.jpg',
 				alt: '',
 			},
 			{

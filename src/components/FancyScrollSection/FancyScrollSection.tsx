@@ -3,6 +3,9 @@ import styles from './FancyScrollSection.module.scss'
 import { getElementOffsetRelativeToRoot } from '../../utils/boundingBoxHelpers'
 import { map } from '../../utils/mathUtils'
 import { Link } from 'react-router-dom'
+import { FadeInCenter } from '../FadeInCenter'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store'
 
 export interface FancyScrollSectionProps {
 	title: ReactNode
@@ -15,12 +18,18 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 	const textRef = useRef<HTMLDivElement>(null)
 	const listRef = useRef<HTMLUListElement>(null)
 
+	const lowFPS = useSelector((state: RootState) => state.lowFPS)
+
 	useEffect(() => {
 		const scrollHandler = () => {
 			const scrollY = window.scrollY
 			const container = containerRef.current
 			const list = listRef.current
 			if (!container || !list) return
+
+			if (container.getBoundingClientRect().top > window.innerHeight) {
+				return
+			}
 
 			const offsetStart = getElementOffsetRelativeToRoot(container)
 			const offsetStop = offsetStart + container.offsetHeight + window.innerHeight
@@ -67,7 +76,10 @@ export const FancyScrollSection: FC<FancyScrollSectionProps> = (props) => {
 	return (
 		<div className={styles.container} ref={containerRef}>
 			<div className={styles.main_text} ref={textRef}>
-				<h2>{props.title}</h2>
+				<FadeInCenter>
+					<h2>{props.title}</h2>
+				</FadeInCenter>
+
 				{props.description}
 			</div>
 			<div className={styles.super_fancy_window}>
@@ -91,6 +103,7 @@ interface FancyCardProps {
 	video?: string
 	picture?: string
 	link: string
+	thumb?: string
 }
 
 const FancyCard: FC<FancyCardProps> = (props) => (
@@ -98,7 +111,15 @@ const FancyCard: FC<FancyCardProps> = (props) => (
 		<Link to={props.link}>
 			{props.picture ? <img src={props.picture} alt={props.title} /> : null}
 			{props.video ? (
-				<video src={props.video + '?fm=mp4&res=medium'} muted autoPlay loop playsInline disableRemotePlayback />
+				<video
+					src={props.video + '?fm=mp4&res=medium'}
+					muted
+					autoPlay
+					loop
+					playsInline
+					disableRemotePlayback
+					poster={props.thumb}
+				/>
 			) : null}
 			<div className={styles.text}>
 				<h3>{props.title}</h3>

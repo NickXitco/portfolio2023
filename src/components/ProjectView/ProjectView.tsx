@@ -11,9 +11,11 @@ export interface ProjectViewProps {
 }
 
 export const ProjectView: FC<ProjectViewProps> = (props) => {
+	const [key, setKey] = useState(0)
 	useEffect(() => {
 		if (props.visible) {
 			document.body.style.overflow = 'hidden'
+			setKey((k) => k + 1)
 		} else {
 			document.body.style.overflow = 'auto'
 		}
@@ -21,6 +23,7 @@ export const ProjectView: FC<ProjectViewProps> = (props) => {
 
 	return (
 		<div
+			key={key}
 			id={'project-view'}
 			className={styles.container}
 			aria-hidden={!props.visible}
@@ -102,6 +105,7 @@ const ImageGrid: FC<ImageGridProps> = (props) => {
 				{activeItem.video ? (
 					<video
 						src={activeItem.src + '?fm=mp4&res=medium'}
+						poster={activeItem.thumb}
 						muted
 						autoPlay
 						loop

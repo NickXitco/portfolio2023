@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useEffect, useState } from 'react'
 import styles from './MainFrame.module.scss'
-import { AppDispatch, RootState } from '../../store'
+import { RootState } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ShaderMaterial } from 'three'
@@ -8,11 +8,14 @@ import { Plane } from '@react-three/drei'
 import { Section } from '../../reducers/CurrentSection'
 import { BoidsGeo, BoidsRunner } from '../Boids'
 import { Img } from '../Img'
+import { setLowFPS } from '../../reducers/LowFPS'
 
 export interface MainFrameProps extends PropsWithChildren {}
 
 export const MainFrame: FC<MainFrameProps> = (props) => {
 	const currentSection = useSelector((state: RootState) => state.currentSection)
+
+	const lowFPS = useSelector((state: RootState) => state.lowFPS)
 
 	return (
 		<div className={styles.container}>
@@ -37,7 +40,7 @@ export const MainFrame: FC<MainFrameProps> = (props) => {
 				<div
 					className={styles.canvas}
 					style={{
-						filter: getFilter(currentSection.value),
+						filter: lowFPS.value ? '' : getFilter(currentSection.value),
 					}}
 				>
 					<Img
@@ -47,12 +50,16 @@ export const MainFrame: FC<MainFrameProps> = (props) => {
 						className={styles.grain_texture}
 						dprHeight={1000}
 					/>
-					<Canvas camera={{ position: [0, 0, 350], fov: 75, near: 1, far: 3000 }}>
-						<SwimmingPool />
-						<fog attach="fog" args={[0xffffff, 100, 1000]} />
-						<BoidsRunner />
-						<BoidsGeo />
-					</Canvas>
+					{lowFPS.value ? (
+						<div className={styles.fallback} />
+					) : (
+						<Canvas camera={{ position: [0, 0, 350], fov: 75, near: 1, far: 3000 }}>
+							<SwimmingPool />
+							<fog attach="fog" args={[0xffffff, 100, 1000]} />
+							<BoidsRunner />
+							<BoidsGeo />
+						</Canvas>
+					)}
 				</div>
 			</div>
 		</div>
@@ -133,14 +140,27 @@ const GradientShader = {
 
 export const SWIMMING_POOL_Z = -700
 const SWIMMING_POOL_WIDTH = 4000
+const WINDOW_SIZE = 30
+const movingAverageWindow = new Array(WINDOW_SIZE).fill(120)
+let movingAverage = 120
+
 const SwimmingPool = () => {
 	const [shaderMaterial, setShaderMaterial] = useState<ShaderMaterial>()
+	const appDispatch = useDispatch()
 
 	useEffect(() => {
 		setShaderMaterial(new ShaderMaterial(GradientShader))
 	}, [])
 
-	useFrame(({ clock }) => {
+	useFrame(({ clock }, delta) => {
+		movingAverageWindow.shift()
+		movingAverageWindow.push(1 / Math.max(delta, 0.001))
+		movingAverage = movingAverageWindow.reduce((a, b) => a + b, 0) / WINDOW_SIZE
+
+		if (movingAverage < 45) {
+			appDispatch(setLowFPS(true))
+		}
+
 		if (shaderMaterial) {
 			shaderMaterial.uniforms.time.value = clock.getElapsedTime() % 10000
 		}

@@ -101,7 +101,7 @@ export const Img: FC<ImgProps> = (props) => {
 				loading={loadingType}
 				id={props.id}
 				srcSet={props.unoptimized ? props.src : getSrcSet(props.src, props.dprHeight || windowHeight)}
-				style={{ objectFit: props.objectFit || 'contain' }}
+				style={{ objectFit: props.objectFit || 'cover' }}
 			/>
 		)
 	}

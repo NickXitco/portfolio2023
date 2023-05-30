@@ -2,6 +2,8 @@ import { FC, useEffect, useRef } from 'react'
 import { getElementOffsetRelativeToRoot } from '../../utils/boundingBoxHelpers'
 import { map } from '../../utils/mathUtils'
 import { FancyScrollSection } from '../FancyScrollSection'
+import { FadeInCenter } from '../FadeInCenter'
+import { findProject } from '../../assets/projects'
 
 export interface PerformerProps {}
 
@@ -36,18 +38,26 @@ export const Performer: FC<PerformerProps> = (props) => {
 			title={'Performer'}
 			description={
 				<>
-					<p>
-						I'm a pianist of 20 years, and have been slowly collecting an armada of instrumental skills over
-						my life. I've been music directing and acting for several years now, with credits in all sorts
-						of theatre in Baltimore and Austin.
-					</p>
-					<p>
-						Keep scrolling to check out some of my projects, or look at my{' '}
-						<a href={'https://storage.googleapis.com/nick-xitco-portfolio-assets/Performance%20Resume.pdf'}>
-							performance resume
-						</a>
-						!
-					</p>
+					<FadeInCenter>
+						<p>
+							I'm a pianist of 20 years, and have been slowly collecting an armada of instrumental skills
+							over my life. I've been music directing and acting for several years now, with credits in
+							all sorts of theatre in Baltimore and Austin.
+						</p>
+					</FadeInCenter>
+					<FadeInCenter>
+						<p>
+							Keep scrolling to check out some of my projects, or look at my{' '}
+							<a
+								href={
+									'https://storage.googleapis.com/nick-xitco-portfolio-assets/Performance%20Resume.pdf'
+								}
+							>
+								performance resume
+							</a>
+							!
+						</p>
+					</FadeInCenter>
 				</>
 			}
 			cards={[
@@ -55,43 +65,50 @@ export const Performer: FC<PerformerProps> = (props) => {
 					title: 'Newsies',
 					description: 'Zilker Theatre Productions',
 					link: '/project/newsies',
-					video: 'https://nickxitcoportfolio.imgix.net/newsies/newsies.mp4',
+					video: findProject('newsies')!.imageGridItems[0].src,
+					thumb: findProject('newsies')!.imageGridItems[0].thumb,
 				},
 				{
 					title: 'Elf',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/elf',
-					video: 'https://nickxitcoportfolio.imgix.net/elf/elf.mp4',
+					video: findProject('elf')!.imageGridItems[0].src,
+					thumb: findProject('elf')!.imageGridItems[0].thumb,
 				},
 				{
 					title: 'Vocal Chords',
 					description: 'Johns Hopkins University',
 					link: '/project/vc',
-					video: 'https://nickxitcoportfolio.imgix.net/vc/vc.mp4',
+					video: findProject('vc')!.imageGridItems[0].src,
+					thumb: findProject('vc')!.imageGridItems[0].thumb,
 				},
 				{
 					title: 'Something Rotten',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/something_rotten',
-					video: 'https://nickxitcoportfolio.imgix.net/somethingrotten/something_rotten.mp4',
+					video: findProject('something_rotten')!.imageGridItems[0].src,
+					thumb: findProject('something_rotten')!.imageGridItems[0].thumb,
 				},
 				{
 					title: 'Holiday Inn',
 					description: 'Georgetown Palace Theatre',
 					link: '/project/holiday_inn',
-					video: 'https://nickxitcoportfolio.imgix.net/holiday/holiday%20inn.mp4',
+					video: findProject('holiday_inn')!.imageGridItems[0].src,
+					thumb: findProject('holiday_inn')!.imageGridItems[0].thumb,
 				},
 				{
 					title: 'Cabaret',
 					description: 'JHU Barnstormers',
 					link: '/project/cabaret',
-					video: 'https://nickxitcoportfolio.imgix.net/cabaret/cabaret.mp4',
+					video: findProject('cabaret')!.imageGridItems[0].src,
+					thumb: findProject('cabaret')!.imageGridItems[0].thumb,
 				},
 				{
 					title: 'Pippin',
 					description: 'JHU Barnstormers',
 					link: '/project/pippin',
-					video: 'https://nickxitcoportfolio.imgix.net/pippin/pippin.mp4',
+					video: findProject('pippin')!.imageGridItems[0].src,
+					thumb: findProject('pippin')!.imageGridItems[0].thumb,
 				},
 			]}
 		/>
