@@ -97,8 +97,13 @@ export interface ImageGridProps {
 
 const ImageGrid: FC<ImageGridProps> = (props) => {
 	const [activeIndex, setActiveIndex] = useState(0)
+	useEffect(() => {
+		setActiveIndex(0)
+	}, [props.items])
 
 	const activeItem = props.items[activeIndex]
+	if (!activeItem) return null
+
 	return (
 		<div className={styles.image_grid}>
 			<div className={cx(styles.active, { [styles.single_item]: props.items.length === 1 })}>
