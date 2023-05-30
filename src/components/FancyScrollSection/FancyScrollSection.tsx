@@ -92,7 +92,17 @@ const FancyCard: FC<FancyCardProps> = (props) => (
 	<li className={styles.card}>
 		<Link to={props.link}>
 			{props.picture ? <img src={props.picture} alt={props.title} /> : null}
-			{props.video ? <video src={props.video + '?fm=mp4&res=low'} muted autoPlay loop playsInline /> : null}
+			{props.video ? (
+				<video
+					src={props.video + '?fm=mp4&res=low'}
+					muted
+					autoPlay
+					loop
+					playsInline
+					disableRemotePlayback
+					disablePictureInPicture
+				/>
+			) : null}
 			<div className={styles.text}>
 				<h3>{props.title}</h3>
 				<h4>{props.description}</h4>

@@ -100,7 +100,15 @@ const ImageGrid: FC<ImageGridProps> = (props) => {
 		<div className={styles.image_grid}>
 			<div className={cx(styles.active, { [styles.single_item]: props.items.length === 1 })}>
 				{activeItem.video ? (
-					<video src={activeItem.src} muted autoPlay loop playsInline />
+					<video
+						src={activeItem.src}
+						muted
+						autoPlay
+						loop
+						playsInline
+						disableRemotePlayback
+						disablePictureInPicture
+					/>
 				) : (
 					<Img src={activeItem.src} alt={activeItem.alt} dprHeight={600} objectFit={'cover'} />
 				)}
