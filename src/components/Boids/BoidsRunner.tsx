@@ -45,6 +45,8 @@ export const BoidsRunner: FC = () => {
 	const mouseX = useRef(0)
 	const mouseY = useRef(0)
 
+	const frame = useRef(0)
+
 	useEffect(() => {
 		gpuCompute = new GPUComputationRenderer(WIDTH, WIDTH, gl)
 		if (!gl.capabilities.isWebGL2) {
@@ -92,29 +94,33 @@ export const BoidsRunner: FC = () => {
 		}
 	}, [gl])
 
-	useEffect(() => {
-		const handleResize = () => {
-			;(camera as PerspectiveCamera).aspect = window.innerWidth / window.innerHeight
-			camera.updateProjectionMatrix()
-			gl.setSize(size.width, size.height)
-		}
+	const handleResize = () => {
+		;(camera as PerspectiveCamera).aspect = window.innerWidth / window.innerHeight
+		camera.updateProjectionMatrix()
+		gl.setSize(size.width, size.height)
+	}
 
+	useEffect(() => {
 		const handlePointerMove = (event: PointerEvent) => {
 			event.preventDefault()
 			mouseX.current = event.clientX
 			mouseY.current = event.clientY
 		}
 
-		window.addEventListener('resize', handleResize)
 		window.addEventListener('pointermove', handlePointerMove)
 
 		return () => {
-			window.removeEventListener('resize', handleResize)
 			window.removeEventListener('pointermove', handlePointerMove)
 		}
 	}, [camera, gl, size.height, size.width])
 
 	useFrame((state, delta) => {
+		// frame.current++
+		//
+		// if (frame.current % 100 === 0) {
+		// 	handleResize()
+		// }
+
 		positionUniforms['time'].value = state.clock.elapsedTime
 		positionUniforms['delta'].value = delta
 		velocityUniforms['time'].value = state.clock.elapsedTime

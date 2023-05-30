@@ -1,9 +1,9 @@
-import { FC, PropsWithChildren, useEffect, useState } from 'react'
+import { FC, PropsWithChildren, useEffect, useRef, useState } from 'react'
 import styles from './MainFrame.module.scss'
 import { RootState } from '../../store'
 import { useDispatch, useSelector } from 'react-redux'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { ShaderMaterial } from 'three'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { MathUtils, Mesh, PerspectiveCamera, ShaderMaterial } from 'three'
 import { Plane } from '@react-three/drei'
 import { Section } from '../../reducers/CurrentSection'
 import { BoidsGeo, BoidsRunner } from '../Boids'
@@ -139,13 +139,21 @@ const GradientShader = {
 }
 
 export const SWIMMING_POOL_Z = -700
-const SWIMMING_POOL_WIDTH = 4000
+
 const WINDOW_SIZE = 30
 const movingAverageWindow = new Array(WINDOW_SIZE).fill(120)
 let movingAverage = 120
 
 const SwimmingPool = () => {
 	const [shaderMaterial, setShaderMaterial] = useState<ShaderMaterial>()
+	const { camera } = useThree()
+
+	const perspectiveCamera = camera as PerspectiveCamera
+
+	const vFOV = MathUtils.degToRad(perspectiveCamera.fov) // convert vertical fov to radians
+	const height = 3 * Math.tan(vFOV / 2) * SWIMMING_POOL_Z // visible height
+	const width = height * perspectiveCamera.aspect // visible width
+
 	const appDispatch = useDispatch()
 
 	useEffect(() => {
@@ -167,10 +175,6 @@ const SwimmingPool = () => {
 	})
 
 	return shaderMaterial ? (
-		<Plane
-			args={[SWIMMING_POOL_WIDTH, SWIMMING_POOL_WIDTH, 10, 10]}
-			material={shaderMaterial}
-			position={[0, 0, SWIMMING_POOL_Z]}
-		/>
+		<Plane args={[width, height, 10, 10]} material={shaderMaterial} position={[0, 0, SWIMMING_POOL_Z]} />
 	) : null
 }
