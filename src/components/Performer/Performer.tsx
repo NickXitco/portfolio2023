@@ -40,9 +40,9 @@ export const Performer: FC<PerformerProps> = (props) => {
 				<>
 					<FadeInCenter>
 						<p>
-							I'm a pianist of 20 years, and have been slowly collecting an armada of instrumental skills
-							over my life. I've been music directing and acting for several years now, with credits in
-							all sorts of theatre in Baltimore and Austin.
+							I'm a pianist of 20 years, and have been slowly developing an abundance of instrumental
+							skills over my life. I've been music directing and acting for several years now, with
+							credits in all sorts of theatre in Baltimore and Austin.
 						</p>
 					</FadeInCenter>
 					<FadeInCenter>
