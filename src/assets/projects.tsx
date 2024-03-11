@@ -552,7 +552,7 @@ export const projects: Project[] = [
 		about: (
 			<>
 				<p>
-					I joined Eight Sleep at the beginning of 2022 as a Full Stack developer. Since then, I've grown into
+					I joined Eight Sleep at the beginning of 2022 as a Full Stack developer. Since then, I've
 					become the company's main Brand and Growth developer, working on a variety of projects across the
 					company, such as:
 				</p>
