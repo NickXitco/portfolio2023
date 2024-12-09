@@ -34,13 +34,14 @@ export const AboutMe: FC<AboutMeProps> = (props) => {
 						<p>
 							Currently, I'm a Full-Stack Developer at <a href="https://eightsleep.com">Eight Sleep</a>,
 							where I'm building the future of sleep. After-hours, I work as an actor, music director, and
-							pit musician across theaters in the greater-Austin area.
+							pit musician across theaters in the greater-Austin and NYC areas.
 						</p>
 					</FadeInCenter>
 					<FadeInCenter>
 						<p>
 							Originally hailing from San Diego, I studied music and computer science at Johns Hopkins in
-							Baltimore, and am now perched in Austin, ready for the next adventure!
+							Baltimore. I moved after graduation to Austin, where I worked as a software engineer and
+							music director and actor for several years, and am now based full-time in NYC.
 						</p>
 					</FadeInCenter>
 				</div>

@@ -19,7 +19,7 @@ export const Home: FC<HomeProps> = (props) => {
 			</header>
 			<div className={styles.text}>
 				<h2 className={styles.subtitle}>
-					<a href={'#developer'}>Developer</a> & <a href={'#performer'}>Performer</a> based out of Austin
+					<a href={'#developer'}>Developer</a> & <a href={'#performer'}>Performer</a> based out of NYC
 				</h2>
 				<p className={styles.subsubtitle}>currently at Eight Sleep</p>
 			</div>
